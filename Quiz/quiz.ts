@@ -18,9 +18,13 @@ class Mario {
     }
 
     shootFireball(): void {
-        console.log(
-            this.currentForm + " belum bisa menembak bola api"
-        );
+        if (this.currentForm === "fire mario") {
+            console.log("Fire Mario menembak bola api!");
+        } else {
+            console.log(
+                this.currentForm + " belum bisa menembak bola api"
+            );
+        }
     }
 
     eatStar(): void {
@@ -74,27 +78,36 @@ class FireMario extends Mario {
     }
 }
 
-let mario = new Mario();
+// Mario biasa makan item
+const mario = new Mario();
 
-mario.moveRight();
+mario.eatMushroom();
+mario.eatFireFlower();
 mario.shootFireball();
+
 console.log(mario);
 
-let superMario = new SuperMario();
+// Super Mario makan Fire Flower
+const superMario = new SuperMario();
 
-superMario.moveLeft();
+superMario.eatFireFlower();
+superMario.shootFireball();
+
 console.log(superMario);
 
-let fireMario = new FireMario();
+// Fire Mario menembakkan bola api
+const fireMario = new FireMario();
 
 fireMario.shootFireball();
 
 fireMario.eatStar();
 fireMario.attacked();
 
+// Mario kehilangan kekebalan untuk menguji serangan berikutnya
 fireMario.invincible = false;
 fireMario.attacked();
 fireMario.shootFireball();
+
 console.log(fireMario);
 
 export {};
