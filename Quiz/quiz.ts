@@ -20,7 +20,7 @@ class Mario {
     this.currentForm = "mario";
   }
 
-  // method ini akan di-override (ditulis ulang) sama class anak
+  // Method ini akan di-override (ditulis ulang) oleh class anak
   shootFireball(): void {
     console.log(this.currentForm + " belum bisa menembak bola api");
   }
@@ -28,9 +28,10 @@ class Mario {
   // 1. SuperMushroom: jadi Super Mario, HP + 1
   eatMushroom(): SuperMario {
     let baru = new SuperMario();
-    baru.hp = this.hp + 1;          // HP + 1
-    baru.positionX = this.positionX; // posisi lama dibawa ke object baru
+    baru.hp = this.hp + 1;
+    baru.positionX = this.positionX;
     baru.positionY = this.positionY;
+    baru.invincible = this.invincible; // Pertahankan status kebal
     return baru;
   }
 
@@ -40,6 +41,7 @@ class Mario {
     baru.hp = this.hp + 1;
     baru.positionX = this.positionX;
     baru.positionY = this.positionY;
+    baru.invincible = this.invincible; // Pertahankan status kebal
     return baru;
   }
 
@@ -48,7 +50,7 @@ class Mario {
     this.invincible = true;
   }
 
-  // 4. diserang
+  // 4. Diserang
   attacked(): void {
     if (this.invincible) {
       console.log(this.currentForm + " kebal, serangan tidak berpengaruh");
@@ -59,12 +61,12 @@ class Mario {
     }
   }
 
-  // 5. bergerak ke kanan
+  // 5. Bergerak ke kanan
   moveRight(): void {
     this.positionX = this.positionX + this.speed;
   }
 
-  // 6. bergerak ke kiri
+  // 6. Bergerak ke kiri
   moveLeft(): void {
     this.positionX = this.positionX - this.speed;
   }
@@ -82,7 +84,7 @@ class Mario {
 // ------------------- CLASS ANAK: SUPER MARIO -------------------
 class SuperMario extends Mario {
   constructor() {
-    super();                      // ambil semua atribut dari Mario
+    super();
     this.currentForm = "super mario";
   }
 }
@@ -94,9 +96,13 @@ class FireMario extends Mario {
     this.currentForm = "fire mario";
   }
 
-  // override: Fire Mario bisa menembak bola api
+  // Override: Fire Mario bisa menembak bola api (selama form-nya masih fire mario)
   shootFireball(): void {
-    console.log("fire mario menembak bola api!");
+    if (this.currentForm === "fire mario") {
+      console.log("fire mario menembak bola api!");
+    } else {
+      super.shootFireball();
+    }
   }
 }
 
@@ -104,7 +110,6 @@ class FireMario extends Mario {
 //  CARA PAKAI (OBJECT)
 // =====================================================================
 
-// Mario mulai dari form dasar
 let mario = new Mario();
 mario.status();
 
@@ -128,6 +133,7 @@ fireMario.attacked();
 fireMario.invincible = false;
 fireMario.attacked();
 fireMario.status();
+fireMario.shootFireball(); // Sekarang otomatis gagal menembak karena sudah kembali jadi 'mario'
 
 // 5 & 6. Bergerak kanan lalu kiri
 mario.moveRight();
