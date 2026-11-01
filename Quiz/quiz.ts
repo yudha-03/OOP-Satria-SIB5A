@@ -25,14 +25,27 @@ class Mario {
     console.log(this.currentForm + " belum bisa menembak bola api");
   }
 
-  // 5. bergerak ke kanan
-  moveRight(): void {
-    this.positionX = this.positionX + this.speed;
+  // 1. SuperMushroom: jadi Super Mario, HP + 1
+  eatMushroom(): SuperMario {
+    let baru = new SuperMario();
+    baru.hp = this.hp + 1;          // HP + 1
+    baru.positionX = this.positionX; // posisi lama dibawa ke object baru
+    baru.positionY = this.positionY;
+    return baru;
   }
 
-  // 6. bergerak ke kiri
-  moveLeft(): void {
-    this.positionX = this.positionX - this.speed;
+  // 2. FireFlower: jadi Fire Mario, HP + 1
+  eatFireFlower(): FireMario {
+    let baru = new FireMario();
+    baru.hp = this.hp + 1;
+    baru.positionX = this.positionX;
+    baru.positionY = this.positionY;
+    return baru;
+  }
+
+  // 3. SuperStar: kebal terhadap serangan
+  eatStar(): void {
+    this.invincible = true;
   }
 
   // 4. diserang
@@ -44,6 +57,16 @@ class Mario {
       this.currentForm = "mario";
       console.log("Mario diserang, HP sekarang " + this.hp);
     }
+  }
+
+  // 5. bergerak ke kanan
+  moveRight(): void {
+    this.positionX = this.positionX + this.speed;
+  }
+
+  // 6. bergerak ke kiri
+  moveLeft(): void {
+    this.positionX = this.positionX - this.speed;
   }
 
   status(): void {
@@ -86,18 +109,16 @@ let mario = new Mario();
 mario.status();
 
 // 1. Makan SuperMushroom -> jadi Super Mario, HP + 1
-let superMario = new SuperMario();
-superMario.hp = mario.hp + 1;
+let superMario = mario.eatMushroom();
 superMario.status();
 
 // 2. Makan FireFlower -> jadi Fire Mario, HP + 1, bisa nembak api
-let fireMario = new FireMario();
-fireMario.hp = superMario.hp + 1;
+let fireMario = superMario.eatFireFlower();
 fireMario.status();
 fireMario.shootFireball();
 
 // 3. Makan SuperStar -> kebal
-fireMario.invincible = true;
+fireMario.eatStar();
 fireMario.status();
 
 // 4. Diserang saat kebal -> tidak berpengaruh
