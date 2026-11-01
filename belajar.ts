@@ -1,36 +1,39 @@
-abstract class itemperpus {
-    constructor (public tittle: string, protected loanDays: number){}
-    getInfo (): string {
-        return this.tittle + " dipinjam " + this.loanDays + " hari"
+class marioBaru {
+    hp: number;
+    speed: number;
+    positionX: number;
+    positionY: number;
+    invincible: boolean;
+    currentForm: string;
+
+    constructor(){
+        this.hp = 1;
+        this.speed = 5;
+        this.positionX = 0;
+        this.positionY = 0;
+        this.invincible = false
+        this.currentForm = "mario"
     }
-    abstract calculateFine(dayslate: number): number;
+
+    nembakApi() : void {
+        console.log(this.currentForm + " tidak bisa nembak api")
+    }
+
+    makanJamur() : marioSuper {
+        
+    }
 }
 
-class bukuKomik extends itemperpus {
-    constructor(tittle: string, public author: string){
-        super(tittle, 7)
-    }
-    calculateFine(dayslate: number): number {
-        return dayslate * 1000
+class marioSuper extends marioBaru {
+    constructor(){
+        super()
+        this.currentForm = "super mario"
     }
 }
 
-class majalah extends itemperpus {
-    constructor(tittle: string){
-        super(tittle, 9)
-    }
-    calculateFine(dayslate: number): number {
-        return dayslate * 500
+class marioFire extends marioBaru {
+    constructor(){
+        super()
+        this.currentForm = "fire mario"
     }
 }
-
-let item: itemperpus
-
-item = new bukuKomik("jujutsu kaisen", " g tau siapa")
-console.log(item.getInfo())
-console.log(item.calculateFine(2))
-
-item = new majalah("majalah dewasa")
-console.log(item.getInfo())
-console.log(item.calculateFine(3))
-
